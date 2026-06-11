@@ -138,7 +138,7 @@ Item {
         onRunningChanged: if (!running) root._loadDevices()
     }
 
-    Process { id: bluemanProc; command: ["blueman-manager"]; running: false }
+    Process { id: bluemanProc; command: ["bash", "-c", "command -v blueman-manager >/dev/null && exec blueman-manager; exec kitty --class bt-settings -e bluetoothctl"]; running: false } // rog: Gentoo fallback
 
     Timer { interval: 8000; repeat: true; running: true; onTriggered: if (!root._scanning) root._loadDevices() }
 

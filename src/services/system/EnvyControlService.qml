@@ -30,7 +30,7 @@ QtObject {
 
     // ── Query current mode ────────────────────────────────────────────────────
     property var _queryProc: Process {
-        command: ["envycontrol", "--query"]
+        command: ["bash", "-c", "command -v envycontrol >/dev/null && envycontrol -q || echo none"] // rog: desktop guard (no Optimus)
         running: false
         stdout: StdioCollector {
             onStreamFinished: {

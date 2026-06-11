@@ -23,7 +23,7 @@ Column {
 
     Process {
         id: gfxReader
-        command: ["envycontrol", "-q"]
+        command: ["bash", "-c", "command -v envycontrol >/dev/null && envycontrol -q || echo none"] // rog: desktop guard
         running: true
         stdout: StdioCollector {
             onStreamFinished: {
