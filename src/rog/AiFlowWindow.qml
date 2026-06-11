@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
-import "../state"
+import "../"  // Popups singleton via src/qmldir (audit: ../state was load-order fragile)
 import "./aiflow"
 
 // ============================================================
