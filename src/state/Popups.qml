@@ -14,7 +14,6 @@ QtObject {
     property bool notificationToastOpen:    false
     property bool quickOpen: false
     property bool clipboardOpen:     false
-    property bool aiflowOpen:        false   // Rog AI Workload dashboard (src/rog)
 
     // ── Dashboard — per-page state ───────────────────────────────────────────
     property int    dashboardPageWidth: 900
@@ -67,7 +66,7 @@ QtObject {
     readonly property bool anyOpen: audioOpen || networkOpen || batteryOpen
                                     || notificationsOpen || archMenuOpen
                                     || dashboardOpen || wallpaperOpen || quickOpen
-                                    || clipboardOpen || aiflowOpen
+                                    || clipboardOpen
 
     function closeAll() {
         audioOpen         = false
@@ -79,6 +78,5 @@ QtObject {
         wallpaperOpen     = false
         quickOpen         = false
         clipboardOpen     = false
-        aiflowOpen        = false
     }
 }

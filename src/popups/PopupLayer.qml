@@ -34,7 +34,6 @@ Item {
     // Bottom-right corner → clipboard history + emoji
     ClipboardPopup {}
 
-
     // ── TopBar-anchored popups ───────────────────────────────
 
     // Right notch — audio

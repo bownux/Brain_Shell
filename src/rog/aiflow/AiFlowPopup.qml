@@ -225,10 +225,8 @@ Item {
         }
     }
 
-    Keys.onEscapePressed: (event) => {
-        Quickshell.execDetached(["bash", "/home/luis/.config/hypr/scripts/qs_manager.sh", "close"]);
-        event.accepted = true;
-    }
+    // (Escape handling: Brain_Shell's PopupDismiss closes the dashboard —
+    // the classic shell's qs_manager Escape handler was removed here.)
 
     // =========================================================================
     //  SHELL
@@ -1263,10 +1261,10 @@ Item {
                     id: chart
                     Layout.fillWidth: true
                     Layout.preferredHeight: window.s(74)
-                    property var data: window.hist
+                    property var histData: window.hist  // NOT 'data' — that shadows Item.data and children clobber the binding
                     property string m: window.metric
                     property int hoverIdx: -1            // bucket under the cursor (-1 = none)
-                    onDataChanged: requestPaint()
+                    onHistDataChanged: requestPaint()
                     onMChanged: requestPaint()
                     onWidthChanged: requestPaint()
                     onHoverIdxChanged: requestPaint()
