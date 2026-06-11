@@ -92,6 +92,7 @@ Item {
             width: parent.width; wrapMode: Text.Wrap; lineHeight: 1.4
             font.family: "JetBrains Mono"; font.pixelSize: 11; color: Theme.subtext
             text: "SUPER+G / SUPER+TAB   workspace overview (scroll ↑↓ between workspaces)\n" +
+                  "SUPER+SHIFT+TAB       flip layout: scrolling tape ↔ dwindle tiling\n" +
                   "SUPER+←→ / SUPER+H,L  glide along the scrolling tape\n" +
                   "SUPER+SHIFT+←→        carry window along the tape\n" +
                   "SUPER+[  /  SUPER+]   shrink / widen column\n" +
