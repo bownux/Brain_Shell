@@ -91,12 +91,12 @@ StatCard {
 
     Process { id: btPowerRead
         command: ["bash", "-c",
-            "bluetoothctl show 2>/dev/null | grep '^\\s*Powered:' | awk '{print $2}'"]
+            "timeout 3 bluetoothctl show 2>/dev/null | grep '^\\s*Powered:' | awk '{print $2}'"]
         running: false
         stdout: SplitParser { onRead: function(l) { root.btOn = l.trim() === "yes" } } }
     Process { id: btDeviceRead
         command: ["bash", "-c",
-            "bluetoothctl devices Connected 2>/dev/null | head -1 | cut -d' ' -f3-"]
+            "timeout 3 bluetoothctl devices Connected 2>/dev/null | head -1 | cut -d' ' -f3-"]
         running: false
         stdout: SplitParser { onRead: function(l) { root.btDevice = l.trim() } } }
     Process { id: btToggleProc; command: []; running: false
@@ -118,7 +118,7 @@ StatCard {
         if (!turningOn) ShellState.btConnected = false
 
         btToggleProc.command = ["bash", "-c",
-            "bluetoothctl power " + (turningOn ? "on" : "off")]
+            "timeout 3 bluetoothctl power " + (turningOn ? "on" : "off")]
         btToggleProc.running = false
         btToggleProc.running = true
     }

@@ -80,25 +80,25 @@ Item {
         command: [
             "bash", "-c",
             "echo 'POWERED:'; " +
-            "bluetoothctl show 2>/dev/null | awk '/Powered:/{print $2}'; " +
+            "timeout 3 bluetoothctl show 2>/dev/null | awk '/Powered:/{print $2}'; " +
             "echo 'PAIRED:'; " +
-            "bluetoothctl devices Paired    2>/dev/null | awk '{print $2}'; " +
+            "timeout 3 bluetoothctl devices Paired    2>/dev/null | awk '{print $2}'; " +
             "echo 'CONNECTED:'; " +
-            "bluetoothctl devices Connected 2>/dev/null | awk '{print $2}'; " +
+            "timeout 3 bluetoothctl devices Connected 2>/dev/null | awk '{print $2}'; " +
             "echo 'ALL:'; " +
-            "bluetoothctl devices           2>/dev/null"
+            "timeout 3 bluetoothctl devices           2>/dev/null"
         ]
         running: false
         stdout: StdioCollector { onStreamFinished: root._parseDevices(text) }
     }
 
-    // Scan — pipe commands into interactive bluetoothctl
+    // Scan — pipe commands into interactive timeout 3 bluetoothctl
     Process {
         id: scanProc
         command: [
             "bash", "-c",
             "trap 'echo scan off | timeout 3 bluetoothctl 2>/dev/null' EXIT; " +
-            "(echo 'power on'; echo 'scan on'; sleep 8) | timeout 9 bluetoothctl 2>/dev/null"
+            "(echo 'power on'; echo 'scan on'; sleep 8) | timeout 9 timeout 3 bluetoothctl 2>/dev/null"
         ]
         running: false
         stdout: SplitParser {
@@ -138,7 +138,7 @@ Item {
         onRunningChanged: if (!running) root._loadDevices()
     }
 
-    Process { id: bluemanProc; command: ["bash", "-c", "command -v blueman-manager >/dev/null && exec blueman-manager; exec kitty --class bt-settings -e bluetoothctl"]; running: false } // rog: Gentoo fallback
+    Process { id: bluemanProc; command: ["bash", "-c", "command -v blueman-manager >/dev/null && exec blueman-manager; exec kitty --class bt-settings -e timeout 3 bluetoothctl"]; running: false } // rog: Gentoo fallback
 
     Timer { interval: 8000; repeat: true; running: true; onTriggered: if (!root._scanning) root._loadDevices() }
 
@@ -198,7 +198,7 @@ Item {
         root._btPowered       = on
         ShellState.btPowered  = on
         if (!on) { ShellState.btConnected = false; root._allDevices = [] }
-        powerProc.command = ["bluetoothctl", "power", on ? "on" : "off"]
+        powerProc.command = ["timeout 3 bluetoothctl", "power", on ? "on" : "off"]
         powerProc.running = false
         powerProc.running = true
     }
@@ -221,13 +221,13 @@ Item {
     function _connect(mac) {
         root._actionMac = mac
         root._pairingMac = ""
-        actionProc.command = ["bluetoothctl", "connect", mac]
+        actionProc.command = ["timeout 3 bluetoothctl", "connect", mac]
         actionProc.running = false; actionProc.running = true
     }
 
     function _disconnect(mac) {
         root._actionMac = mac
-        actionProc.command = ["bluetoothctl", "disconnect", mac]
+        actionProc.command = ["timeout 3 bluetoothctl", "disconnect", mac]
         actionProc.running = false; actionProc.running = true
     }
 
@@ -235,18 +235,18 @@ Item {
         root._actionMac = mac; root._pairingMac = ""
         actionProc.command = pin !== ""
             ? ["bash", "-c",
-                "(echo 'default-agent'; echo 'trust " + mac + "'; echo 'pair " + mac + "'; sleep 1; echo '" + pin + "'; sleep 4) | timeout 12 bluetoothctl 2>/dev/null"]
+                "(echo 'default-agent'; echo 'trust " + mac + "'; echo 'pair " + mac + "'; sleep 1; echo '" + pin + "'; sleep 4) | timeout 12 timeout 3 bluetoothctl 2>/dev/null"]
             : ["bash", "-c",
-                "(echo 'default-agent'; echo 'trust " + mac + "'; echo 'pair " + mac + "'; sleep 1; echo 'yes'; sleep 4) | timeout 12 bluetoothctl 2>/dev/null"]
+                "(echo 'default-agent'; echo 'trust " + mac + "'; echo 'pair " + mac + "'; sleep 1; echo 'yes'; sleep 4) | timeout 12 timeout 3 bluetoothctl 2>/dev/null"]
         actionProc.running = false; actionProc.running = true
     }
 
     function _remove(mac) {
         root._removeMac = ""; root._removingMac = mac
         removeProc.command = ["bash", "-c",
-            "bluetoothctl untrust " + mac + " 2>/dev/null; " +
-            "bluetoothctl disconnect " + mac + " 2>/dev/null; " +
-            "bluetoothctl remove " + mac + " 2>/dev/null"]
+            "timeout 3 bluetoothctl untrust " + mac + " 2>/dev/null; " +
+            "timeout 3 bluetoothctl disconnect " + mac + " 2>/dev/null; " +
+            "timeout 3 bluetoothctl remove " + mac + " 2>/dev/null"]
         removeProc.running = false; removeProc.running = true
     }
 

@@ -6,7 +6,7 @@ import "../."
 
 // Global shell state.
 //
-// WiFi / Bluetooth  — owned by QuickSettings (nmcli / bluetoothctl)
+// WiFi / Bluetooth  — owned by QuickSettings (nmcli / timeout 3 bluetoothctl)
 // Night Light       — owned by QuickSettings (hyprsunset)
 // Caffeine          — owned by QuickSettings (systemd-inhibit)
 // Hotspot           — owned by QuickSettings (nmcli hotspot)
