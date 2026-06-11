@@ -33,7 +33,7 @@ PanelWindow {
         "home":     900,
         "stats":    900,
         "kanban":   900,
-        "ai":       1000,
+        "ai":       1320,
         "launcher": 560,
         "config":   900
     })
@@ -106,7 +106,7 @@ PanelWindow {
         width:  Popups.dashboardOpen ? Popups.dashboardPageWidth + 2 * root.fw : Theme.cNotchMinWidth + 2 * root.fw
         // AI page needs more vertical room than the stock pages
         height: Popups.dashboardOpen
-                ? (root.page === "ai" ? Math.min(screen.height - 80, Theme.dashboardHeight * 2)
+                ? (root.page === "ai" ? Math.min(screen.height - 100, 1575) // 1500 content + frame/tabbar chrome
                                       : Theme.dashboardHeight)
                 : Theme.notchHeight / 2
 
@@ -190,7 +190,7 @@ PanelWindow {
                         contentHeight: aiPage.height
                         // Rog AI Workload dashboard as a first-class page —
                         // fixed virtual height, scrolls if the window is shorter
-                        AiFlowPopup { id: aiPage; width: parent.width; height: 1180 }
+                        AiFlowPopup { id: aiPage; width: parent.width; height: 1500 }
                     }
                     Item {
                         anchors.fill: parent
