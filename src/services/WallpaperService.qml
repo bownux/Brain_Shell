@@ -46,7 +46,7 @@ QtObject {
     property var listProc: Process {
         command: [
             "bash", "-c",
-            "find " + root.wallpaperDir + " -maxdepth 1 -type f " +
+            "find " + root.wallpaperDir + " -maxdepth 2 -type f " +
             "\\( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' " +
             "-o -iname '*.gif' -o -iname '*.webp' \\) | sort"
         ]

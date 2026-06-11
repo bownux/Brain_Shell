@@ -11,7 +11,7 @@ Item {
     // ── Source allowlist ──────────────────────────────────────────────────────
     readonly property var _allowed: [
         "spotify", "youtube",
-        "firefox", "chromium", "chrome",
+        "firefox", "zen", "chromium", "chrome",
         "brave", "edge", "opera", "vivaldi", "safari", "arc"
     ]
 

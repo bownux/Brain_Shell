@@ -1,7 +1,6 @@
 import QtQuick
 import Quickshell
 import "../"
-import "../rog"
 
 // ============================================================
 // PopupLayer — the only file that instantiates popup windows.
@@ -35,10 +34,6 @@ Item {
     // Bottom-right corner → clipboard history + emoji
     ClipboardPopup {}
 
-    // Top-right — Rog AI Workload dashboard (vendored from the classic shell)
-    AiFlowWindow {
-        screen: root.topBar.screen
-    }
 
     // ── TopBar-anchored popups ───────────────────────────────
 

@@ -58,7 +58,7 @@ Item {
             Item {
                 anchors.fill: parent
                 visible: root._page === "appearance"
-                Text { anchors.centerIn: parent; text: "Appearance Coming Soon!"; font.pixelSize: 13; color: Qt.rgba(1,1,1,0.12) }
+                RogAppearance { anchors.fill: parent }
             }
             Item {
                 anchors.fill: parent

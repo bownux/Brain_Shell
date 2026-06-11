@@ -21,9 +21,9 @@ QtObject {
     property var aiflow: IpcHandler {
         target: "aiflow"
         function toggle() {
-            var next = !Popups.aiflowOpen
+            var open = Popups.dashboardOpen && Popups.dashboardPage === "ai"
             Popups.closeAll()
-            Popups.aiflowOpen = next
+            if (!open) { Popups.dashboardOpen = true; Popups.dashboardPage = "ai" }
         }
     }
 

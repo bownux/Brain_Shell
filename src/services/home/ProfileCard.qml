@@ -10,7 +10,7 @@ StatCard {
     id: root
     padding: 0
 
-    property string avatarPath: ""
+    property string avatarPath: "/home/luis/.face"   // abstract Rog avatar (magick-generated)
 
     property string _user:   ""
     property string _wm:     ""
@@ -126,7 +126,7 @@ StatCard {
             Row {
                 spacing: 8
                 Text {
-                    text: "󰣇"; font.pixelSize: 12; color: Theme.active
+                    text: ""; font.pixelSize: 12; color: Theme.active
                     anchors.verticalCenter: parent.verticalCenter
                 }
                 Text {

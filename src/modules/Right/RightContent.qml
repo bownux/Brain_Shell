@@ -3,6 +3,7 @@ import Quickshell
 import "../../components"
 import "../../windows"
 import "../../"
+import "../../rog/bar"
 
 Item {
     id: root
@@ -29,7 +30,8 @@ Item {
 
         Network{}
         Audio{}
-        Battery{}
+        // Battery removed — desktop tower (2026-06-11). Rog pills instead:
+        RogPills{}
         Clock{}
         SysTray{}
         Notifications{}

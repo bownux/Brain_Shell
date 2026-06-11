@@ -152,10 +152,10 @@ Item {
             StatCard {
                 width:  parent.width - Math.round(parent.width * 0.20) - Math.round(parent.width * 0.35) - parent.spacing * 2
                 height: parent.height
-                PowerPanel {
+                // PowerPanel (laptop power-profiles/envycontrol) replaced —
+                // this tower is pinned to EPP=performance at the OS level.
+                RogGpuPanel {
                     anchors.fill:   parent
-                    cpuFreqService: cpuFreq
-                    envyService:    envy
                 }
             }
         }

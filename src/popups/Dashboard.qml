@@ -7,6 +7,7 @@ import "../components"
 import "../modules/Center/"
 import '../services/'
 import "../"
+import "../rog/aiflow"
 
 // Dashboard — PanelWindow required for TextInput keyboard focus on Wayland.
 // Uses WlrKeyboardFocus.Exclusive so TextInputs inside pages receive key events.
@@ -32,6 +33,7 @@ PanelWindow {
         "home":     900,
         "stats":    900,
         "kanban":   900,
+        "ai":       640,
         "launcher": 560,
         "config":   900
     })
@@ -157,6 +159,7 @@ PanelWindow {
                         { key: "stats",    icon: "󰻠", label: "System" },
                         { key: "kanban",   icon: "󰄬", label: "Tasks"  },
                         { key: "launcher", icon: "󱓞", label: "Apps"   },
+                        { key: "ai",       icon: "󰚩", label: "AI"     },
                         { key: "config",   icon: "󰒓", label: "Config" },
                     ]
                     onPageChanged: function(key) { Popups.dashboardPage = key }
@@ -176,6 +179,12 @@ PanelWindow {
                         DashHome { anchors.fill: parent }
                     }
 
+                    Item {
+                        anchors.fill: parent
+                        visible:      root.page === "ai"
+                        // Rog AI Workload dashboard as a first-class page
+                        AiFlowPopup { anchors.fill: parent }
+                    }
                     Item {
                         anchors.fill: parent
                         visible:      root.page === "stats"
