@@ -97,7 +97,7 @@ Item {
         id: scanProc
         command: [
             "bash", "-c",
-            "trap 'echo scan off | bluetoothctl 2>/dev/null' EXIT; " +
+            "trap 'echo scan off | timeout 3 bluetoothctl 2>/dev/null' EXIT; " +
             "(echo 'power on'; echo 'scan on'; sleep 8) | timeout 9 bluetoothctl 2>/dev/null"
         ]
         running: false
