@@ -63,12 +63,12 @@ Item {
             Item {
                 anchors.fill: parent
                 visible: root._page === "layout"
-                Text { anchors.centerIn: parent; text: "Layout & Behavior Coming Soon!"; font.pixelSize: 13; color: Qt.rgba(1,1,1,0.12) }
+                RogLayout { anchors.fill: parent }
             }
             Item {
                 anchors.fill: parent
                 visible: root._page === "data"
-                Text { anchors.centerIn: parent; text: "Data & Storage Coming Soon! "; font.pixelSize: 13; color: Qt.rgba(1,1,1,0.12) }
+                RogStorage { anchors.fill: parent }
             }
             Item {
                 anchors.fill: parent

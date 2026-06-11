@@ -23,3 +23,5 @@ AppLauncher AppLauncher.qml
 ShellConfig ./config_tab/ShellConfig.qml
 KeybindsPage ./config_tab/KeybindsPage.qml
 RogAppearance ./config_tab/RogAppearance.qml
+RogStorage ./config_tab/RogStorage.qml
+RogLayout ./config_tab/RogLayout.qml

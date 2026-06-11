@@ -17,6 +17,16 @@ QtObject {
     // ── Dashboard Toggles ────────────────────────────────────
     
 
+    // ── Wallpaper picker (SUPER+W via wallpaper-toggle) ──────
+    property var wallpaper: IpcHandler {
+        target: "wallpaper"
+        function toggle() {
+            var next = !Popups.wallpaperOpen
+            Popups.closeAll()
+            Popups.wallpaperOpen = next
+        }
+    }
+
     // ── Rog AI Workload dashboard (src/rog) ──────────────────
     property var aiflow: IpcHandler {
         target: "aiflow"

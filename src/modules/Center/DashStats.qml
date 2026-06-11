@@ -12,6 +12,37 @@ Item {
     ThermalService     { id: thermal; active: root.visible }
     FanControl         { id: fan }
     DiskService        { id: disk;    active: root.visible }
+
+    // Rog GPU aggregate (ai-state): R9700 trio max-util + pooled VRAM, 3080 Ti
+    Item {
+        id: rogGpus
+        property int amdUtil: 0
+        property string amdVram: "—"
+        property int nvUtil: 0
+        property string nvVram: "—"
+        Process {
+            id: rogGpuProc; running: false
+            command: ["bash", "-c", "/home/luis/ai/hermes-brains/bin/ai-state"]
+            stdout: StdioCollector {
+                onStreamFinished: {
+                    try {
+                        const gs = (JSON.parse(this.text).gpus || []);
+                        let au = 0, aU = 0, aT = 0, nu = 0, nU = 0, nT = 0;
+                        gs.forEach(g => {
+                            if (!g) return;
+                            if (g.kind === "nvidia") { nu = g.util || 0; nU = g.vram_used || 0; nT = g.vram_total || 0; }
+                            else { au = Math.max(au, g.util || 0); aU += g.vram_used || 0; aT += g.vram_total || 0; }
+                        });
+                        rogGpus.amdUtil = au; rogGpus.nvUtil = nu;
+                        rogGpus.amdVram = (aU/1024).toFixed(0) + " / " + (aT/1024).toFixed(0) + " GB";
+                        rogGpus.nvVram  = (nU/1024).toFixed(1) + " / " + (nT/1024).toFixed(0) + " GB";
+                    } catch (e) {}
+                }
+            }
+        }
+        Timer { interval: 4000; repeat: true; running: root.visible; triggeredOnStart: true
+                onTriggered: { rogGpuProc.running = false; rogGpuProc.running = true } }
+    }
     EnvyControlService { id: envy }
     CpuFreqService     { id: cpuFreq }
     GpuService {
@@ -64,15 +95,17 @@ Item {
                 }
             }
 
+            // iGPU/dGPU rings replaced — no iGPU on the Threadripper; this rig
+            // runs 3x R9700 (AI) + a 3080 Ti (display/vision). Data: ai-state.
             StatCard {
                 width:  (parent.width - parent.spacing * 3) / 4
                 height: parent.height
                 Speedometer {
                     anchors.centerIn: parent
-                    label:       "iGPU"
-                    percent:     gpu.igpu.freqPercent
-                    centerText:  gpu.igpu.freqPercent + "%"
-                    bottomText:  gpu.igpu.curMhz
+                    label:       "R9700 ×3"
+                    percent:     rogGpus.amdUtil
+                    centerText:  rogGpus.amdUtil + "%"
+                    bottomText:  rogGpus.amdVram
                     active:      true
                     accentColor: "#89dceb"
                 }
@@ -83,11 +116,11 @@ Item {
                 height: parent.height
                 Speedometer {
                     anchors.centerIn: parent
-                    label:       "dGPU"
-                    percent:     gpu.dgpu.active ? gpu.dgpu.usagePercent : 0
-                    centerText:  gpu.dgpu.active ? (gpu.dgpu.usagePercent + "%") : "0%"
-                    bottomText:  gpu.dgpu.active ? (gpu.dgpu.usedVram + " / " + gpu.dgpu.totalVram) : ""
-                    active:      gpu.dgpu.active
+                    label:       "3080 Ti"
+                    percent:     rogGpus.nvUtil
+                    centerText:  rogGpus.nvUtil + "%"
+                    bottomText:  rogGpus.nvVram
+                    active:      true
                     accentColor: "#a6e3a1"
                 }
             }
