@@ -33,7 +33,7 @@ PanelWindow {
         "home":     900,
         "stats":    900,
         "kanban":   900,
-        "ai":       640,
+        "ai":       1000,
         "launcher": 560,
         "config":   900
     })
@@ -104,7 +104,11 @@ PanelWindow {
         clip: true
 
         width:  Popups.dashboardOpen ? Popups.dashboardPageWidth + 2 * root.fw : Theme.cNotchMinWidth + 2 * root.fw
-        height: Popups.dashboardOpen ? Theme.dashboardHeight : Theme.notchHeight / 2
+        // AI page needs more vertical room than the stock pages
+        height: Popups.dashboardOpen
+                ? (root.page === "ai" ? Math.min(screen.height - 80, Theme.dashboardHeight * 2)
+                                      : Theme.dashboardHeight)
+                : Theme.notchHeight / 2
 
         Behavior on width  { NumberAnimation { duration: root.animDuration; easing.type: Easing.InOutCubic } }
         Behavior on height { NumberAnimation { duration: root.animDuration; easing.type: Easing.InOutCubic } }
@@ -179,11 +183,14 @@ PanelWindow {
                         DashHome { anchors.fill: parent }
                     }
 
-                    Item {
+                    Flickable {
                         anchors.fill: parent
                         visible:      root.page === "ai"
-                        // Rog AI Workload dashboard as a first-class page
-                        AiFlowPopup { anchors.fill: parent }
+                        clip:         true
+                        contentHeight: aiPage.height
+                        // Rog AI Workload dashboard as a first-class page —
+                        // fixed virtual height, scrolls if the window is shorter
+                        AiFlowPopup { id: aiPage; width: parent.width; height: 1180 }
                     }
                     Item {
                         anchors.fill: parent
