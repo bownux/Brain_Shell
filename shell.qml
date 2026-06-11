@@ -3,12 +3,17 @@ import QtQuick
 import "./src/windows"
 import "./src/popups"
 import "./src/"
+import "./src/rog/voice"
 
 ShellRoot {
     // Force-instantiate lazy singletons that need startup behavior
     property var _keybinds:   KeybindService
     property var _updater:    UpdateService
     property var _ipc:        IpcManager
+
+    // Rog's Hermes voice orb — self-contained overlay (own per-screen Variants),
+    // vendored from the classic shell (src/rog/voice). Reads ~/.hermes/voice/.
+    VoiceOrb {}
 
     Variants {
         model: Quickshell.screens

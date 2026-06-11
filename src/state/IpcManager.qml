@@ -16,6 +16,17 @@ QtObject {
 
     // ── Dashboard Toggles ────────────────────────────────────
     
+
+    // ── Rog AI Workload dashboard (src/rog) ──────────────────
+    property var aiflow: IpcHandler {
+        target: "aiflow"
+        function toggle() {
+            var next = !Popups.aiflowOpen
+            Popups.closeAll()
+            Popups.aiflowOpen = next
+        }
+    }
+
     property var dashboardHome: IpcHandler {
         target: "dashboard-home"
         function toggle() {

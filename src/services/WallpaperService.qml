@@ -10,7 +10,7 @@ import "../"
 // Flow:
 //   Component.onCompleted → readConfigProc (sets currentWall etc.)
 //                         → refresh() (populates wallpapers list)
-//   apply(path)           → awww img + ln -sf ~/.curr_wall + matugen
+//   apply(path)           → swww img + ln -sf ~/.curr_wall + matugen
 //                         → saveConfig() (writes src/user_data/wallpaper.json)
 // ============================================================
 
@@ -112,7 +112,7 @@ QtObject {
         root.currentWall = path
         applyProc.command = [
             "bash", "-c",
-            "awww img --transition-type grow --transition-step 200 --transition-duration 1.2 --transition-fps 60 --transition-pos bottom \"" + path + "\" " +
+            "swww img --transition-type grow --transition-step 200 --transition-duration 1.2 --transition-fps 60 --transition-pos bottom \"" + path + "\" " +
             "&& ln -sf \"" + path + "\" ~/.curr_wall " +
             "&& (if [[ \"" + path + "\" == *.gif ]]; then " +
             "rm -f ~/.curr_wall_static.jpg; magick \"" + path + "[0]\" ~/.curr_wall_static.jpg || true; " +
